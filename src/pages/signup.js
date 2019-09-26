@@ -168,18 +168,16 @@ class signup extends Component {
 
 signup.propTypes = {
     classes: PropTypes.object.isRequired,
-    loginUser: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
     UI: PropTypes.object.isRequired,
+    signupUser: PropTypes.func.isRequired
 };
-
 const mapStateToProps = (state) => ({
     user: state.user,
     UI: state.UI
 });
 
-const mapActionsToProps = {
-    signupUser
-};
-
-export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(signup));
+export default connect(
+    mapStateToProps,
+    {signupUser}
+)(withStyles(styles)(signup));

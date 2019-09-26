@@ -49,10 +49,10 @@ class login extends Component {
             email: '',
             password: '',
             errors: {}
-        }
+        };
     }
 
-    componentWillReceiveProps(nextProps, nextContext) {
+    componentWillReceiveProps(nextProps) {
         if (nextProps.UI.errors) {
             this.setState({errors: nextProps.UI.errors});
         }
@@ -66,31 +66,33 @@ class login extends Component {
         };
         this.props.loginUser(userData, this.props.history);
     };
-
     handleChange = (event) => {
         this.setState({
-            [event.target.name]: event.target.value,
-        })
+            [event.target.name]: event.target.value
+        });
     };
 
-
     render() {
-        const {classes, UI: {loading}} = this.props;
+        const {
+            classes,
+            UI: {loading}
+        } = this.props;
         const {errors} = this.state;
+
         return (
             <Grid container className={classes.form}>
                 <Grid item sm/>
                 <Grid item sm>
-                    <img src={AppIcon} className={classes.image} alt="monkey"/>
+                    <img src={AppIcon} alt="monkey" className={classes.image}/>
                     <Typography variant="h2" className={classes.pageTitle}>
                         Login
                     </Typography>
-                    <form className={classes.container} noValidate onSubmit={this.handleSubmit} autoComplete="off">
+                    <form noValidate onSubmit={this.handleSubmit}>
                         <TextField
                             id="email"
-                            label="Email"
-                            type="email"
                             name="email"
+                            type="email"
+                            label="Email"
                             className={classes.textField}
                             helperText={errors.email}
                             error={!!errors.email}
@@ -100,9 +102,9 @@ class login extends Component {
                         />
                         <TextField
                             id="password"
-                            label="Password"
-                            type="password"
                             name="password"
+                            type="password"
+                            label="Password"
                             className={classes.textField}
                             helperText={errors.password}
                             error={!!errors.password}
@@ -115,14 +117,22 @@ class login extends Component {
                                 {errors.general}
                             </Typography>
                         )}
-                        <Button type="submit" variant="contained" color="primary"
-                                className={classes.button} disabled={loading}>
-                            Login {loading && (
-                            <CircularProgress size={30} className={classes.progress}/>
-                        )}
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            className={classes.button}
+                            disabled={loading}
+                        >
+                            Login
+                            {loading && (
+                                <CircularProgress size={30} className={classes.progress}/>
+                            )}
                         </Button>
                         <br/>
-                        <small>Don't have an account? Sign up <Link to='/signup'>here</Link></small>
+                        <small>
+                            dont have an account ? sign up <Link to="/signup">here</Link>
+                        </small>
                     </form>
                 </Grid>
                 <Grid item sm/>
@@ -135,7 +145,7 @@ login.propTypes = {
     classes: PropTypes.object.isRequired,
     loginUser: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
-    UI: PropTypes.object.isRequired,
+    UI: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -147,5 +157,7 @@ const mapActionsToProps = {
     loginUser
 };
 
-
-export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(login));
+export default connect(
+    mapStateToProps,
+    mapActionsToProps
+)(withStyles(styles)(login));
